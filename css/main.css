@@ -90,11 +90,16 @@ body {
     top:0;
     bottom: 0;
     width: 100%;
-    background-color: #b69;
+    background: #b69 ;
     backface-visibility: hidden;
     transform: rotateY(180deg);   
 }
-.flip {
+.card-back div {
+    width: 96px;
+    height: 96px;
+    background: url('../img/sprite-sheet.png') 0 0 no-repeat;
+}
+.turn {
     transform: rotateY(180deg);   
 }
 
@@ -177,6 +182,10 @@ body {
 }
 .show {
     display: block;
+}
+.hide {
+    visibility: hidden;
+    /* border: 5px solid gold; */
 }
 .show-anim {
     display: block;

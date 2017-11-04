@@ -13,6 +13,55 @@
         }
     }
 
+    class Field {
+        constructor(){
+            this.turnedCard = null;
+
+        }
+    }
+
+    class Card {
+        constructor(cardId, field, render) {
+            this.cardId = cardId;
+            this.guessed = false;
+            this.field = field;
+            this.render = render;
+        }
+        tryToTurn() {
+            if (!this.guessed && this != this.field.turnedCard) {
+                this.turn();
+            }
+        }
+        turn() {
+            this.render.classList.toggle('turn');
+            let turnedCard = this.field.turnedCard;
+            if (turnedCard === null) {
+                this.field.turnedCard = this; 
+            } else {
+                if (this.cardId === turnedCard.cardId) {
+                    this.guessed = true;
+                    turnedCard.guessed = true;
+
+                    // find out how to unsubscribe
+                    // this.render.removeEventListener('click', this.turn);
+                    // turnedCard.render.removeEventListener('click', this.turn);
+
+                    this.render.classList.add('hide');
+                    turnedCard.render.classList.add('hide');
+
+                    this.field.turnedCard = null;
+                } else {
+                    setTimeout( () => {
+                        this.render.classList.toggle('turn');
+                        turnedCard.render.classList.toggle('turn');
+                    }, 500);
+                    this.field.turnedCard = null;
+                }
+            }
+                
+        }
+    }
+
     //popup
 
     btnNewGame.addEventListener('click', function(event) {
@@ -66,21 +115,26 @@
         if (board.children.length > 0) 
             board.removeChild(board.firstElementChild);
 
-        let field = document.createElement('div');
-        field.classList.add('field');
+        let fieldRender = document.createElement('div');
+        fieldRender.classList.add('field');
+
+        let field = new Field();
+
         switch (cardsNumber) {
             case 10:
-                field.classList.add('field-for-10');
+                fieldRender.classList.add('field-for-10');
                 break;
             case 18:
-                field.classList.add('field-for-18');
+                fieldRender.classList.add('field-for-18');
                 break;
         }
-        board.appendChild(field);
+        board.appendChild(fieldRender);
 
         for (let i = 0; i < cardsNumber; i++) {
             let cardRender = document.createElement('div');
             cardRender.classList.add('card');
+
+            let card = new Card(i%2, field, cardRender);
 
             let cardShirt = document.createElement('div');
             cardShirt.classList.add('card-shirt');
@@ -90,12 +144,10 @@
 
             cardRender.appendChild(cardShirt);
             cardRender.appendChild(cardBack);
+            
+            cardRender.addEventListener('click',() => card.tryToTurn());
 
-            cardRender.addEventListener('click', function() {
-                this.classList.add('flip');
-            });
-
-            field.appendChild(cardRender);
+            fieldRender.appendChild(cardRender);
         }
 
         popup.classList.remove('show-anim');
