@@ -91,17 +91,12 @@ body {
     bottom: 0;
     width: 100%;
     background-color: #b69;
-    transform: rotateY(180deg);
     backface-visibility: hidden;
+    transform: rotateY(180deg);   
 }
-
-.chosen-card {
-    background-color: pink
+.flip {
+    transform: rotateY(180deg);   
 }
-.card:hover {
-    transform: rotateY(180deg);
-}
-
 
 
 

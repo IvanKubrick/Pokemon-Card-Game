@@ -2,7 +2,6 @@
     let btnNewGame = document.querySelector('.btn-new-game');
     let popup = document.querySelector('.popup');
     let overlay = document.querySelector('.overlay');
-
     let difficulties = document.querySelector('.difficulties');
     let cardStyles = document.querySelector('.card-styles');
     let btnStart = document.querySelector('.btn-start');
@@ -13,6 +12,8 @@
             elems[i].classList.remove('active');
         }
     }
+
+    //popup
 
     btnNewGame.addEventListener('click', function(event) {
         event.preventDefault();
@@ -29,8 +30,7 @@
         }
     });
 
-
-
+    // game settings
 
     cardStyles.addEventListener('click', event => {
         let lis = cardStyles.children;
@@ -79,8 +79,8 @@
         board.appendChild(field);
 
         for (let i = 0; i < cardsNumber; i++) {
-            let card = document.createElement('div');
-            card.classList.add('card');
+            let cardRender = document.createElement('div');
+            cardRender.classList.add('card');
 
             let cardShirt = document.createElement('div');
             cardShirt.classList.add('card-shirt');
@@ -88,13 +88,14 @@
             let cardBack = document.createElement('div');
             cardBack.classList.add('card-back');
 
-            card.appendChild(cardShirt);
-            card.appendChild(cardBack);
+            cardRender.appendChild(cardShirt);
+            cardRender.appendChild(cardBack);
 
-            // card.addEventListener('click', event => {
-            //     card.classList.add('chosen-card');
-            // });
-            field.appendChild(card);
+            cardRender.addEventListener('click', function() {
+                this.classList.add('flip');
+            });
+
+            field.appendChild(cardRender);
         }
 
         popup.classList.remove('show-anim');
