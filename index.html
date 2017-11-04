@@ -8,24 +8,34 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <div class="controls">
-        <ul class="menu card-styles">
-            <li>Card style</li>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-        </ul>
-        <ul class="menu difficulties">
-            <li>Game difficulty</li>
-            <li>Low (5 x 2)</li>
-            <li>Medium (6 x 3)</li>
-            <li>High (8 x 3)</li>
-        </ul>
-        <button class="btn-game">New Game</button>
-    </div>
-    <div class="board">
+    <button class="btn-new-game">Play</button>
 
+    <div class="board"></div>
+
+    <div class="overlay"></div>
+    <div class="popup">
+        <h2>Game settings</h2>
+        <div class="menu">
+            <div>
+                <h3>Card styles</h3>
+                <ul class="card-styles">
+                    <li class="active">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Difficulty</h3>
+                <ul class="difficulties">
+                    <li>Low (5 x 2)</li>
+                    <li class="active">Medium (6 x 3)</li>
+                    <li>High (8 x 3)</li>
+                </ul>
+            </div>
+        </div>
+        <button class="btn-start">Start</button>
     </div>
+
     <script src="js/main.js"></script>
 </body>
 </html>
