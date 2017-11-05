@@ -17,14 +17,16 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.btn-new-game, .btn-start{
-    background-color: #fff;
-    color: #000;
+.btn{
+    background-color: #e41f25;
+    color: #fff;
     font-size: 16px;
-    border: 3px solid black;
+    font-weight: bold;
+    border: 5px solid #000;
     outline: none;
     display: inline-block;
     vertical-align: top;
+    transition: background-color .2s;
 }
 .btn-new-game {
     height: 100px;
@@ -36,13 +38,11 @@ body {
 .btn-start {
     padding: 20px 30px;
 }
-.btn-start:hover, .btn-new-game:hover {
-    background-color: #e41f25;
-    color: #fff;
+.btn:hover {
+    color: #000;
 }
-.btn-start:active, .btn-new-game:active {
-    background-color: #8a1317;
-    color: #fff;
+.btn:active{
+    background-color: #a31620;
 }
 
 
@@ -73,30 +73,33 @@ body {
     height: 180px;
     width: 120px;
     margin: 10px;
-    border-radius: 8px;
     transform-style: preserve-3d;
     transition: 0.5s;
-    background-color: black;
+    border: 3px;
+    border-color: rgb(31, 61, 90);
 }
 .card-shirt {
     position: absolute;
     top:0;
     bottom: 0;
     width: 100%;
-    background-color: #369;
+    background-color: #369;  
 }
 .card-back {
+    display: flex;
     position: absolute;
     top:0;
     bottom: 0;
     width: 100%;
-    background: #b69 ;
+    background: #fff9c0;
     backface-visibility: hidden;
-    transform: rotateY(180deg);   
+    transform: rotateY(180deg);
+    border-color: gold;
 }
 .card-back div {
     width: 96px;
     height: 96px;
+    margin: auto;
     background: url('../img/sprite-sheet.png') 0 0 no-repeat;
 }
 .turn {
@@ -126,6 +129,7 @@ body {
     margin-top: -200px;
     margin-left: -400px;
     background-color: #fff;
+    border-radius: 10px;
     width: 800px;
     height: 400px;
     text-align: center;

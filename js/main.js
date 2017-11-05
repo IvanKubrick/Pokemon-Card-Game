@@ -54,7 +54,7 @@
                     setTimeout( () => {
                         this.render.classList.toggle('turn');
                         turnedCard.render.classList.toggle('turn');
-                    }, 500);
+                    }, 1000);
                     this.field.turnedCard = null;
                 }
             }
@@ -129,18 +129,37 @@
                 break;
         }
         board.appendChild(fieldRender);
+        const arr = [];
+
+        const POKEMON_NUMBER = 917;
+        for (let i = 0; i < cardsNumber; i++) {
+            let temp = Math.floor( Math.random() * POKEMON_NUMBER );
+            arr.push(temp);
+            arr.push(temp);
+        }
+        //shuffle(arr);
 
         for (let i = 0; i < cardsNumber; i++) {
             let cardRender = document.createElement('div');
             cardRender.classList.add('card');
 
-            let card = new Card(i%2, field, cardRender);
+            let card = new Card(arr[i], field, cardRender);
 
             let cardShirt = document.createElement('div');
             cardShirt.classList.add('card-shirt');
 
             let cardBack = document.createElement('div');
             cardBack.classList.add('card-back');
+
+            let spriteDiv = document.createElement('div');
+            const SPRITE_WIDTH = 96;
+            const SPRITE_HEIGHT = 96;
+            const N_COLUMNS = 30;
+            
+            let posY = Math.floor(arr[i] / N_COLUMNS) * SPRITE_HEIGHT;
+            let posX = (arr[i] % N_COLUMNS) * SPRITE_WIDTH;
+            spriteDiv.style.backgroundPosition = `-${posX}px -${posY}px`;
+            cardBack.appendChild(spriteDiv);
 
             cardRender.appendChild(cardShirt);
             cardRender.appendChild(cardBack);
