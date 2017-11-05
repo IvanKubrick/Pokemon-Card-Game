@@ -148,16 +148,17 @@
         const cardIds = [];
 
         const POKEMON_NUMBER = 917;
-        for (let i = 0; i < cardsNumber; i++) {
+        for (let i = 0; i < cardsNumber / 2; i++) {
             let temp = Math.floor( Math.random() * POKEMON_NUMBER );
-            cardIds.push(temp);
-            cardIds.push(temp);
+            cardIds.push(temp, temp);
         }
+        console.log(cardIds);
         const randomSort = function(){
             return Math.random() - 0.5;
         }
         cardIds.sort(randomSort);
-
+        console.log(cardIds);
+        
         for (let i = 0; i < cardsNumber; i++) {
             let cardRender = document.createElement('div');
             cardRender.classList.add('card');
