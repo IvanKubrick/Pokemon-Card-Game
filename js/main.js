@@ -2,9 +2,9 @@
     let btnNewGame = document.querySelector('.btn-new-game');
     let popup = document.querySelector('.popup');
     let overlay = document.querySelector('.overlay');
-    let difficulties = document.querySelector('.difficulties');
-    let cardStyles = document.querySelector('.card-styles');
-    let btnStart = document.querySelector('.btn-start');
+    let difficulties = popup.querySelector('.difficulties');
+    let cardStyles = popup.querySelector('.card-styles');
+    let btnStart = popup.querySelector('.btn-start');
     let board = document.querySelector('.board');
     let cardsNumber = 18;
     let removeActive = function(elems) {
@@ -12,14 +12,14 @@
             elems[i].classList.remove('active');
         }
     }
-
+    
     class Field {
         constructor(){
             this.turnedCard = null;
-
+            this.clickable = true;
         }
-    }
 
+    }
     class Card {
         constructor(cardId, field, render) {
             this.cardId = cardId;
@@ -33,11 +33,13 @@
             }
         }
         turn() {
+            if (!this.field.clickable) return;
             this.render.classList.toggle('turn');
             let turnedCard = this.field.turnedCard;
             if (turnedCard === null) {
                 this.field.turnedCard = this; 
             } else {
+                this.field.clickable = false;
                 if (this.cardId === turnedCard.cardId) {
                     this.guessed = true;
                     turnedCard.guessed = true;
@@ -45,20 +47,22 @@
                     // find out how to unsubscribe
                     // this.render.removeEventListener('click', this.turn);
                     // turnedCard.render.removeEventListener('click', this.turn);
-
-                    this.render.classList.add('hide');
-                    turnedCard.render.classList.add('hide');
+                    setTimeout( () => {
+                        this.render.classList.add('hide');
+                        turnedCard.render.classList.add('hide');
+                        this.field.clickable = true;
+                    }, 1000);
 
                     this.field.turnedCard = null;
                 } else {
                     setTimeout( () => {
                         this.render.classList.toggle('turn');
                         turnedCard.render.classList.toggle('turn');
+                        this.field.clickable = true;
                     }, 1000);
                     this.field.turnedCard = null;
                 }
-            }
-                
+            }      
         }
     }
 
@@ -76,6 +80,18 @@
                 popup.classList.remove('show-anim');
                 overlay.classList.remove('show');
             }
+        }
+        if(event.keyCode === 13 || event.keyCode === 32) {
+            if( popup.classList.contains('show-anim') ) {
+                
+            }
+        }
+    });
+    
+    overlay.addEventListener('click', function(event){
+        if( popup.classList.contains('show-anim') ) {
+            popup.classList.remove('show-anim');
+            overlay.classList.remove('show');
         }
     });
 
@@ -112,9 +128,9 @@
 
     btnStart.addEventListener('click', event => {
         event.preventDefault();
-        if (board.children.length > 0) 
+        if (board.children.length > 0) {
             board.removeChild(board.firstElementChild);
-
+        }
         let fieldRender = document.createElement('div');
         fieldRender.classList.add('field');
 
@@ -129,21 +145,24 @@
                 break;
         }
         board.appendChild(fieldRender);
-        const arr = [];
+        const cardIds = [];
 
         const POKEMON_NUMBER = 917;
         for (let i = 0; i < cardsNumber; i++) {
             let temp = Math.floor( Math.random() * POKEMON_NUMBER );
-            arr.push(temp);
-            arr.push(temp);
+            cardIds.push(temp);
+            cardIds.push(temp);
         }
-        //shuffle(arr);
+        const randomSort = function(){
+            return Math.random() - 0.5;
+        }
+        cardIds.sort(randomSort);
 
         for (let i = 0; i < cardsNumber; i++) {
             let cardRender = document.createElement('div');
             cardRender.classList.add('card');
 
-            let card = new Card(arr[i], field, cardRender);
+            let card = new Card(cardIds[i], field, cardRender);
 
             let cardShirt = document.createElement('div');
             cardShirt.classList.add('card-shirt');
@@ -156,8 +175,8 @@
             const SPRITE_HEIGHT = 96;
             const N_COLUMNS = 30;
             
-            let posY = Math.floor(arr[i] / N_COLUMNS) * SPRITE_HEIGHT;
-            let posX = (arr[i] % N_COLUMNS) * SPRITE_WIDTH;
+            let posY = Math.floor(cardIds[i] / N_COLUMNS) * SPRITE_HEIGHT;
+            let posX = (cardIds[i] % N_COLUMNS) * SPRITE_WIDTH;
             spriteDiv.style.backgroundPosition = `-${posX}px -${posY}px`;
             cardBack.appendChild(spriteDiv);
 
