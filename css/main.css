@@ -54,12 +54,13 @@ body {
 }
 .btn-start {
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     left: 50%;
     margin-left: -60px;
     width: 120px;
     height: 70px;
-    border-width: 3px;
+    border: 3px solid #792729;
+    border-radius: 10px;
 }
 
 /* BOARD  */
@@ -99,8 +100,6 @@ body {
     top:0;
     bottom: 0;
     width: 100%;
-    background-color: #369;
-    border: 3px solid rgb(33, 67, 100);
 }
 .card-back {
     display: flex;
@@ -108,16 +107,28 @@ body {
     top:0;
     bottom: 0;
     width: 100%;
-    background: #fff9c0;
+    background-color: #fff;
     backface-visibility: hidden;
     transform: rotateY(180deg);
-    border: 3px solid #fff16f;
+    border: 3px solid #737373;
 }
 .card-back div {
     width: 96px;
     height: 96px;
     margin: auto;
-    background: url('../img/sprite-sheet.png') 0 0 no-repeat;
+    background: url('../img/sprite-sheet-heavy.jpg') 0 0 no-repeat;
+}
+.shirt-style-1 {
+    background-color: #369;
+    border: 3px solid #214364;
+}
+.shirt-style-2 {
+    background-color: #b69;
+    border: 3px solid #914673;
+}
+.shirt-style-3 {
+    background-color: #c2913d;
+    border: 3px solid #8a662c;
 }
 .turn {
     transform: rotateY(180deg);   
@@ -168,36 +179,48 @@ body {
     padding: 20px;
     text-align: center;
 }
-.difficulties {
-    width: 200px;
-    margin: 0 auto;
-    font-size: 16px;
-    text-align: center;
-}
-.difficulty {
-    padding: 12px;
-    border: 1px solid #000;
-    cursor: pointer;
-    background-color: #e4e4e4;
-}
-li.active {
-    background-color: #34c954;
-}
 .card-styles {
     display: flex;
     justify-content: center;
     width: 180px;
     margin: 0 auto;
-    
 }
 .card-style {
     height: 90px;
     width: 60px;
-    border: 1px solid black;
     cursor: pointer;
     background-color: #e4e4e4;
+    border: 3px solid #fff;
+}
+.card-style:nth-child(1) {
+    background-color: #369;
+}
+.card-style:nth-child(2) {
+    background-color: #b69;
+}
+.card-style:nth-child(3) {
+    background-color: #c2913d;
 }
 
+.difficulties {
+    width: 200px;
+    margin: 0 auto;
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid #bbb;
+}
+.difficulty {
+    padding: 12px;
+    background-color: #e4e4e4;
+    border: 1px solid rgb(187, 187, 187);
+    cursor: pointer;
+}
+.difficulty.active {
+    background-color: #34c954;
+}
+.card-style.active {
+    border-color: #000;;
+}
 
 /* ANIMATION */
 

@@ -7,6 +7,7 @@
     let btnStart = popup.querySelector('.btn-start');
     let board = document.querySelector('.board');
     let cardsNumber = 18;
+    let shirtStyle = 1;
     let removeActive = function(elems) {
         for (let i =0; i < elems.length; i++) {
             elems[i].classList.remove('active');
@@ -45,6 +46,7 @@
                     turnedCard.guessed = true;
 
                     // find out how to unsubscribe
+                    //
                     // this.render.removeEventListener('click', this.turn);
                     // turnedCard.render.removeEventListener('click', this.turn);
                     setTimeout( () => {
@@ -81,9 +83,11 @@
                 overlay.classList.remove('show');
             }
         }
+
+        let myEvent = new Event('click');
         if(event.keyCode === 13 || event.keyCode === 32) {
             if( popup.classList.contains('show-anim') ) {
-                
+                btnStart.dispatchEvent(myEvent);
             }
         }
     });
@@ -103,6 +107,17 @@
 
         let li = event.target;
         li.classList.add('active');
+        switch (li) {
+            case lis[0]:
+                shirtStyle = 1;
+                break;
+            case lis[1]:
+                shirtStyle = 2;
+                break;
+            case lis[2]:
+                shirtStyle = 3;
+                break;
+        }
     });
 
     difficulties.addEventListener('click', event => {
@@ -156,7 +171,9 @@
         const randomSort = function(){
             return Math.random() - 0.5;
         }
-        cardIds.sort(randomSort);
+        for (let i = 0; i < 5; i++) {
+            cardIds.sort(randomSort);
+        }
         console.log(cardIds);
         
         for (let i = 0; i < cardsNumber; i++) {
@@ -167,6 +184,18 @@
 
             let cardShirt = document.createElement('div');
             cardShirt.classList.add('card-shirt');
+            switch (shirtStyle) {
+                case 1:
+                    cardShirt.classList.add('shirt-style-1');
+                    break;
+                case 2:
+                    cardShirt.classList.add('shirt-style-2');
+                    break;
+                case 3:
+                    cardShirt.classList.add('shirt-style-3');
+                    break;
+            }
+
 
             let cardBack = document.createElement('div');
             cardBack.classList.add('card-back');
