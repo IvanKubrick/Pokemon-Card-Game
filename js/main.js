@@ -15,6 +15,19 @@
             elems[i].classList.remove('active');
         }
     }
+    let runTimer = function() {
+        let sec = 0;
+        let min = 0;
+        timerId = setTimeout(function tick() {
+            if (sec === 59) {
+                min++;
+                sec = -1;
+            }
+            sec++;
+            timer.innerHTML = `${min}:${sec}`;
+            timerId = setTimeout(tick, 1000)
+        }, 1000);
+    }
 
     class Game {
         constructor() {
@@ -177,6 +190,7 @@
     btnNewGame.addEventListener('click', function(event) {
         event.preventDefault();
         clearTimeout(timerId);
+        timer.innerHTML = '0:0';
         overlay.classList.add('show');
         popup.classList.add('show-anim');
     });
@@ -259,16 +273,6 @@
         popup.classList.remove('show-anim');
         overlay.classList.remove('show');
         
-        let sec = 0;
-        let min = 0;
-        timerId = setTimeout(function tick() {
-            if (sec === 59) {
-                min++;
-                sec = 0;
-            }
-            sec++;
-            timer.innerHTML = `${min}:${sec}`;
-            timerId = setTimeout(tick, 1000)
-        }, 1000);
+        runTimer();
     })
 })();

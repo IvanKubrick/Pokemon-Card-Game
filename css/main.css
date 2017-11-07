@@ -66,14 +66,20 @@ body {
 /* TIMER */
 
 .timer-section {
-    background-color: yellow;
-    font-size: 25px;
-    height: 50px;
-    line-height: 50px;
-    vertical-align: middle;
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    margin: 5px auto;
+    min-height: 70px;
 }
-
+.timer-section span:first-child {
+    font-size: 20px;
+}
+.timer {
+    font-size: 30px;
+    color: #a31620;
+    border: 2px solid #792729;
+}
 /* BOARD  */
 
 .board {
