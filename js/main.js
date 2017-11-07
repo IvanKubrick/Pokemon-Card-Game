@@ -180,7 +180,7 @@
         const randomSort = function(){
             return Math.random() - 0.5;
         }
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 10; i++) {
             cardIds.sort(randomSort);
         }
         
@@ -205,8 +205,8 @@
             }
 
 
-            let cardBack = document.createElement('div');
-            cardBack.classList.add('card-back');
+            let cardFace = document.createElement('div');
+            cardFace.classList.add('card-face');
 
             let spriteDiv = document.createElement('div');
             const SPRITE_WIDTH = 96;
@@ -216,10 +216,10 @@
             let posY = Math.floor(cardIds[i] / N_COLUMNS) * SPRITE_HEIGHT;
             let posX = (cardIds[i] % N_COLUMNS) * SPRITE_WIDTH;
             spriteDiv.style.backgroundPosition = `-${posX}px -${posY}px`;
-            cardBack.appendChild(spriteDiv);
+            cardFace.appendChild(spriteDiv);
 
             cardRender.appendChild(cardShirt);
-            cardRender.appendChild(cardBack);
+            cardRender.appendChild(cardFace);
             
             cardRender.addEventListener('click',() => card.tryToTurn());
 

@@ -131,7 +131,7 @@ body {
     bottom: 0;
     width: 100%;
 }
-.card-back {
+.card-face {
     display: flex;
     position: absolute;
     top:0;
@@ -142,7 +142,7 @@ body {
     transform: rotateY(180deg);
     border: 3px solid #737373;
 }
-.card-back div {
+.card-face div {
     width: 96px;
     height: 96px;
     margin: auto;
