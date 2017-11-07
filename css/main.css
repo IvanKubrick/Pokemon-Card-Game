@@ -13,6 +13,7 @@
 ul {
     list-style-type: none;
 }
+
 html {
     min-height: 100%;
 }
@@ -31,11 +32,11 @@ body {
     color: #fff;
     font-size: 16px;
     font-family: 'roboto-regular', Arial, sans-serif;
-    font-weight: bold;
     border: 5px solid #000;
     outline: none;
     display: inline-block;
     vertical-align: top;
+    text-transform: uppercase;
     cursor: pointer;
     transition: all .2s;
 }
@@ -68,9 +69,37 @@ body {
 .board {
     width: 1200px;
     margin: 0 auto;
-    padding-top: 30px;
     background-color: #fff;
+    text-align: left;
 }
+.guide {
+    width: 900px;
+    margin: 0 auto;
+}
+.guide h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 25px;
+    text-align: center;
+}
+.guide p {
+    margin-bottom: 5px;
+    color: #494949;
+    font-size: 16px;
+}
+.guide ol {
+    padding-left: 19px;
+    color: #494949;
+}
+.guide ol li {
+    margin-bottom: 10px;
+}
+.title {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #e41f25;
+}
+
 .field {
     display: flex;
     justify-content: center;
@@ -94,7 +123,7 @@ body {
     margin: 10px;
     transform-style: preserve-3d;
     opacity: 1;
-    transition: transform .5s, opacity 2s;
+    transition: transform .5s, opacity 1.2s;
 }
 .card-shirt {
     position: absolute;
@@ -109,7 +138,7 @@ body {
     bottom: 0;
     width: 100%;
     background-color: #fff;
-    //backface-visibility: hidden;
+    /* backface-visibility: hidden; */
     transform: rotateY(180deg);
     border: 3px solid #737373;
 }
@@ -190,7 +219,6 @@ body {
     height: 90px;
     width: 60px;
     cursor: pointer;
-    background-color: #e4e4e4;
     border: 3px solid #fff;
 }
 .card-style:nth-child(1) {
@@ -202,28 +230,32 @@ body {
 .card-style:nth-child(3) {
     background-color: #c2913d;
 }
+.card-style:hover {
+    border-color: rgba(0, 0, 0, .4);
+}
+.card-style.active {
+    border-color: #000;;
+}
 
 .difficulties {
     width: 200px;
     margin: 0 auto;
     font-size: 16px;
     text-align: center;
-    border: 2px solid #bbb;
+    border: 1px solid #000;
 }
 .difficulty {
     padding: 12px;
-    background-color: #e4e4e4;
-    border: 1px solid rgb(187, 187, 187);
+    background-color: #feffbe;
+    border: 1px solid #000;
     cursor: pointer;
+    transition: .2s;
 }
-difficulty:hover {
-    background-color: #9e9e9e;
+.difficulty:hover {
+    background-color: #a7ffba;
 }
 .difficulty.active {
     background-color: #34c954;
-}
-.card-style.active {
-    border-color: #000;;
 }
 
 /* ANIMATION */

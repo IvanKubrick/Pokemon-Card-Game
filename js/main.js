@@ -15,9 +15,10 @@
     }
     
     class Field {
-        constructor(){
+        constructor(pairs){
             this.turnedCard = null;
             this.clickable = true;
+            this.pairs = pairs;
         }
 
     }
@@ -53,9 +54,17 @@
                         this.render.classList.add('hide');
                         turnedCard.render.classList.add('hide');
                         this.field.clickable = true;
-                    }, 1000);
+
+                        this.field.pairs -= 1;
+                        if (this.field.pairs === 0) {
+                            setTimeout( () => {
+                                alert('You win');
+                            }, 1300);
+                        }
+                    }, 600);
 
                     this.field.turnedCard = null;
+
                 } else {
                     setTimeout( () => {
                         this.render.classList.toggle('turn');
@@ -150,7 +159,7 @@
         let fieldRender = document.createElement('div');
         fieldRender.classList.add('field');
 
-        let field = new Field();
+        let field = new Field(cardsNumber / 2);
 
         switch (cardsNumber) {
             case 10:
