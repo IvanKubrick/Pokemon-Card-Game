@@ -142,6 +142,7 @@
     //creating new game
 
     btnStart.addEventListener('click', event => {
+        console.log('creating the game', shirtStyle, cardsNumber)
         event.preventDefault();
         if (board.children.length > 0) {
             board.removeChild(board.firstElementChild);
@@ -167,14 +168,12 @@
             let temp = Math.floor( Math.random() * POKEMON_NUMBER );
             cardIds.push(temp, temp);
         }
-        console.log(cardIds);
         const randomSort = function(){
             return Math.random() - 0.5;
         }
         for (let i = 0; i < 5; i++) {
             cardIds.sort(randomSort);
         }
-        console.log(cardIds);
         
         for (let i = 0; i < cardsNumber; i++) {
             let cardRender = document.createElement('div');
