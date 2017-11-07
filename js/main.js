@@ -6,8 +6,10 @@
     let cardStyles = popup.querySelector('.card-styles');
     let btnStart = popup.querySelector('.btn-start');
     let board = document.querySelector('.board');
+    let timer = document.querySelector('.timer');
     let cardsNumber = 18;
     let shirtStyle = 1;
+    let timerId;
     let removeActive = function(elems) {
         for (let i =0; i < elems.length; i++) {
             elems[i].classList.remove('active');
@@ -23,34 +25,28 @@
                 board.removeChild(board.firstElementChild);
             }
             this.field = new Field(this.cardsNumber / 2);
-            
-            this.fieldRender = document.createElement('div');
-            this.fieldRender.classList.add('field');
-            
-            switch(this.cardsNumber) {
-                case 10:
-                    this.fieldRender.classList.add('field-for-10');
-                    break;
-                case 18:
-                    this.fieldRender.classList.add('field-for-18');
-                    break;
-            }
-            board.appendChild(this.fieldRender);
+            this.field.renderField(this.cardsNumber);
         }
         generateCardSet() {
             this.cardIds = [];
             this.POKEMON_NUMBER = 917;
-            const randomSort = function(){
-                return Math.random() - 0.5;
-            }
+
+            const shuffle = (arr) => {
+                let len = arr.length;
+                for (let i = 0; i < len - 1; i++) {
+                    let randomIndex = Math.floor( Math.random() * len );
+                    let temp = arr[randomIndex];
+                    arr[randomIndex] = arr[len - 1];
+                    arr[len - 1] = temp;
+                }
+                return arr;
+            };
 
             for (let i = 0; i < this.cardsNumber / 2; i++) {
                 let temp = Math.floor( Math.random() * this.POKEMON_NUMBER );
                 this.cardIds.push(temp, temp);
             }
-            for (let i = 0; i < 10; i++) {
-                this.cardIds.sort(randomSort);
-            }
+            shuffle(this.cardIds);   
         }
         renderCards() {
             for (let i = 0; i < this.cardsNumber; i++) {
@@ -92,7 +88,7 @@
                 cardRender.appendChild(cardFace);
                 
                 cardRender.addEventListener('click',() => card.tryToTurn());
-                this.fieldRender.appendChild(cardRender);
+                this.field.fieldRender.appendChild(cardRender);
             }
         }
     }
@@ -102,6 +98,20 @@
             this.turnedCard = null;
             this.clickable = true;
             this.pairs = pairs;
+        }
+        renderField(cardsNumber) {
+            this.fieldRender = document.createElement('div');
+            this.fieldRender.classList.add('field');
+            
+            switch(cardsNumber) {
+                case 10:
+                    this.fieldRender.classList.add('field-for-10');
+                    break;
+                case 18:
+                    this.fieldRender.classList.add('field-for-18');
+                    break;
+            }
+            board.appendChild(this.fieldRender);
         }
     }
 
@@ -141,6 +151,7 @@
 
                         this.field.pairs -= 1;
                         if (this.field.pairs === 0) {
+                            clearTimeout(timerId);
                             setTimeout( () => {
                                 alert('Congratulations. You Won.');
                             }, 1300);
@@ -165,6 +176,7 @@
 
     btnNewGame.addEventListener('click', function(event) {
         event.preventDefault();
+        clearTimeout(timerId);
         overlay.classList.add('show');
         popup.classList.add('show-anim');
     });
@@ -246,5 +258,17 @@
 
         popup.classList.remove('show-anim');
         overlay.classList.remove('show');
+        
+        let sec = 0;
+        let min = 0;
+        timerId = setTimeout(function tick() {
+            if (sec === 59) {
+                min++;
+                sec = 0;
+            }
+            sec++;
+            timer.innerHTML = `${min}:${sec}`;
+            timerId = setTimeout(tick, 1000)
+        }, 1000);
     })
 })();
