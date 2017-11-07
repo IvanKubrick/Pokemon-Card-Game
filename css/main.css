@@ -122,6 +122,7 @@ body {
     width: 120px;
     margin: 10px;
     transform-style: preserve-3d;
+    cursor: pointer;
     opacity: 1;
     transition: transform .5s, opacity 1.2s;
 }

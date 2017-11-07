@@ -13,15 +13,98 @@
             elems[i].classList.remove('active');
         }
     }
+
+    class Game {
+        constructor() {
+            this.cardsNumber = cardsNumber;
+        }
+        createField() {
+            if(board.children.length > 0) {
+                board.removeChild(board.firstElementChild);
+            }
+            this.field = new Field(this.cardsNumber / 2);
+            
+            this.fieldRender = document.createElement('div');
+            this.fieldRender.classList.add('field');
+            
+            switch(this.cardsNumber) {
+                case 10:
+                    this.fieldRender.classList.add('field-for-10');
+                    break;
+                case 18:
+                    this.fieldRender.classList.add('field-for-18');
+                    break;
+            }
+            board.appendChild(this.fieldRender);
+        }
+        generateCardSet() {
+            this.cardIds = [];
+            this.POKEMON_NUMBER = 917;
+            const randomSort = function(){
+                return Math.random() - 0.5;
+            }
+
+            for (let i = 0; i < this.cardsNumber / 2; i++) {
+                let temp = Math.floor( Math.random() * this.POKEMON_NUMBER );
+                this.cardIds.push(temp, temp);
+            }
+            for (let i = 0; i < 10; i++) {
+                this.cardIds.sort(randomSort);
+            }
+        }
+        renderCards() {
+            for (let i = 0; i < this.cardsNumber; i++) {
+                let cardRender = document.createElement('div');
+                cardRender.classList.add('card');
     
+                let card = new Card(this.cardIds[i], this.field, cardRender);
+    
+                let cardShirt = document.createElement('div');
+                cardShirt.classList.add('card-shirt');
+
+                switch (shirtStyle) {
+                    case 1:
+                        cardShirt.classList.add('shirt-style-1');
+                        break;
+                    case 2:
+                        cardShirt.classList.add('shirt-style-2');
+                        break;
+                    case 3:
+                        cardShirt.classList.add('shirt-style-3');
+                        break;
+                }
+    
+                let cardFace = document.createElement('div');
+                cardFace.classList.add('card-face');
+    
+                let spriteDiv = document.createElement('div');
+                
+                const SPRITE_WIDTH = 96;
+                const SPRITE_HEIGHT = 96;
+                const COLUMNS_NUMBER = 30;
+                
+                let posY = Math.floor(this.cardIds[i] / COLUMNS_NUMBER) * SPRITE_HEIGHT;
+                let posX = (this.cardIds[i] % COLUMNS_NUMBER) * SPRITE_WIDTH;
+                spriteDiv.style.backgroundPosition = `-${posX}px -${posY}px`;
+                
+                cardFace.appendChild(spriteDiv);
+                cardRender.appendChild(cardShirt);
+                cardRender.appendChild(cardFace);
+                
+                cardRender.addEventListener('click',() => card.tryToTurn());
+                this.fieldRender.appendChild(cardRender);
+            }
+        }
+    }
+
     class Field {
         constructor(pairs){
             this.turnedCard = null;
             this.clickable = true;
             this.pairs = pairs;
         }
-
     }
+
     class Card {
         constructor(cardId, field, render) {
             this.cardId = cardId;
@@ -36,6 +119,7 @@
         }
         turn() {
             if (!this.field.clickable) return;
+
             this.render.classList.toggle('turn');
             let turnedCard = this.field.turnedCard;
             if (turnedCard === null) {
@@ -58,7 +142,7 @@
                         this.field.pairs -= 1;
                         if (this.field.pairs === 0) {
                             setTimeout( () => {
-                                alert('You win');
+                                alert('Congratulations. You Won.');
                             }, 1300);
                         }
                     }, 600);
@@ -151,83 +235,16 @@
     //creating new game
 
     btnStart.addEventListener('click', event => {
-        console.log('creating the game', shirtStyle, cardsNumber)
         event.preventDefault();
-        if (board.children.length > 0) {
-            board.removeChild(board.firstElementChild);
-        }
-        let fieldRender = document.createElement('div');
-        fieldRender.classList.add('field');
-
-        let field = new Field(cardsNumber / 2);
-
-        switch (cardsNumber) {
-            case 10:
-                fieldRender.classList.add('field-for-10');
-                break;
-            case 18:
-                fieldRender.classList.add('field-for-18');
-                break;
-        }
-        board.appendChild(fieldRender);
-        const cardIds = [];
-
-        const POKEMON_NUMBER = 917;
-        for (let i = 0; i < cardsNumber / 2; i++) {
-            let temp = Math.floor( Math.random() * POKEMON_NUMBER );
-            cardIds.push(temp, temp);
-        }
-        const randomSort = function(){
-            return Math.random() - 0.5;
-        }
-        for (let i = 0; i < 10; i++) {
-            cardIds.sort(randomSort);
-        }
         
-        for (let i = 0; i < cardsNumber; i++) {
-            let cardRender = document.createElement('div');
-            cardRender.classList.add('card');
+        let game = new Game;
 
-            let card = new Card(cardIds[i], field, cardRender);
-
-            let cardShirt = document.createElement('div');
-            cardShirt.classList.add('card-shirt');
-            switch (shirtStyle) {
-                case 1:
-                    cardShirt.classList.add('shirt-style-1');
-                    break;
-                case 2:
-                    cardShirt.classList.add('shirt-style-2');
-                    break;
-                case 3:
-                    cardShirt.classList.add('shirt-style-3');
-                    break;
-            }
-
-
-            let cardFace = document.createElement('div');
-            cardFace.classList.add('card-face');
-
-            let spriteDiv = document.createElement('div');
-            const SPRITE_WIDTH = 96;
-            const SPRITE_HEIGHT = 96;
-            const N_COLUMNS = 30;
-            
-            let posY = Math.floor(cardIds[i] / N_COLUMNS) * SPRITE_HEIGHT;
-            let posX = (cardIds[i] % N_COLUMNS) * SPRITE_WIDTH;
-            spriteDiv.style.backgroundPosition = `-${posX}px -${posY}px`;
-            cardFace.appendChild(spriteDiv);
-
-            cardRender.appendChild(cardShirt);
-            cardRender.appendChild(cardFace);
-            
-            cardRender.addEventListener('click',() => card.tryToTurn());
-
-            fieldRender.appendChild(cardRender);
-        }
+        game.createField();
+        game.generateCardSet();   
+        game.renderCards();
+        console.log(game);
 
         popup.classList.remove('show-anim');
         overlay.classList.remove('show');
     })
-
 })();
